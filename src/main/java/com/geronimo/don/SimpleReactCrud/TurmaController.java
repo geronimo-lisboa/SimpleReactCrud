@@ -11,9 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class TurmaController {
 	@Autowired
 	private TurmaRepository turmaRepo;
-	
+/*	
+	@RequestMapping(path="/",name="/", method=RequestMethod.GET)
+	public String getPage() {
+		return "hello";
+	}
+*/	
 	//pra testar: curl -X GET localhost:8080/SimpleReactCrudApplication/app/turma
-	@RequestMapping(name="/app/turma", method=RequestMethod.GET)
+	@RequestMapping(path="/app/turma", name="/app/turma", method=RequestMethod.GET)
 	public Turma getTurma() {
 		List<Turma> lista = turmaRepo.findAll();
 		System.out.println(lista);
