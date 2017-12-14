@@ -1,5 +1,7 @@
 package com.geronimo.don.SimpleReactCrud;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,12 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="turma", schema="teste")
-public class Turma {
+@Table(name="master", schema="master_detail")
+public class Master {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Integer id;
 	private String nome;
+	private List<Detail> details; 
 	public Integer getId() {
 		return id;
 	}
@@ -25,6 +28,12 @@ public class Turma {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	public List<Detail> getDetails() {
+		return details;
+	}
+	public void setDetails(List<Detail> details) {
+		this.details = details;
+	}
 	
-	
+	 
 }
