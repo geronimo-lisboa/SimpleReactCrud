@@ -8,34 +8,43 @@ CREATE DATABASE "SimpleReactCrud"
        LC_CTYPE = 'en_US.UTF-8'
        CONNECTION LIMIT = -1;
 ---------------------------------------------
--- Schema: teste
--- DROP SCHEMA teste;
-CREATE SCHEMA teste
+-- Schema: master_detail
+-- DROP SCHEMA master_detail;
+CREATE SCHEMA master_detail
   AUTHORIZATION postgres;
---------------------------------------------
--- Table: teste.turma
--- DROP TABLE teste.turma;
-CREATE TABLE teste.turma
+-- Table: master_detail.master
+-- DROP TABLE master_detail.master;
+CREATE TABLE master_detail.master
 (
   id serial NOT NULL,
-  nome character varying,
-  CONSTRAINT pk_turma PRIMARY KEY (id)
+  nome character varying NOT NULL,
+  CONSTRAINT pk_master PRIMARY KEY (id)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE teste.turma
+ALTER TABLE master_detail.master
   OWNER TO postgres;
----------------------------------------------
--- Sequence: teste.turma_id_seq
--- DROP SEQUENCE teste.turma_id_seq;
-CREATE SEQUENCE teste.turma_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
-ALTER TABLE teste.turma_id_seq
+
+-- Table: master_detail.detail
+
+-- DROP TABLE master_detail.detail;
+
+CREATE TABLE master_detail.detail
+(
+  id serial NOT NULL,
+  dado character varying,
+  data_alteracao timestamp with time zone NOT NULL,
+  fk_master integer NOT NULL,
+  CONSTRAINT pk_detail PRIMARY KEY (id),
+  CONSTRAINT fk_master_detail FOREIGN KEY (fk_master)
+      REFERENCES master_detail.master (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE master_detail.detail
   OWNER TO postgres;
 
 
