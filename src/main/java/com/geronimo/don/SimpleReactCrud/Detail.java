@@ -6,7 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="detail", schema="master_detail")
@@ -16,6 +20,12 @@ public class Detail {
 	private Integer id;
 	private String dado;
 	private Timestamp dataAlteracao;
+	
+	@NotNull
+	@JsonIgnore
+	@ManyToOne
+	private Master master;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -33,6 +43,12 @@ public class Detail {
 	}
 	public void setDataAlteracao(Timestamp dataAlteracao) {
 		this.dataAlteracao = dataAlteracao;
+	}
+	public Master getMaster() {
+		return master;
+	}
+	public void setMaster(Master master) {
+		this.master = master;
 	}
 	
 	

@@ -14,6 +14,7 @@ public class MasterController {
 //curl -X GET localhost:8080/	
 	@RequestMapping(path="/app/masters", method=RequestMethod.GET)
 	public List<Master> GetAllMasters(){
-		return null;
+		final List<Master> myList = masterRepo.findAll(); 
+		return myList;
 	}
 }
