@@ -8,20 +8,20 @@ class Client{
 	        error.response = response;
 	        console.log(error);
 	        throw error;
-	    }		
+	    }
 	}
-	
+
 	parseJSON = (response)=>{
 		return response.json();
 	}
-	
+
 	getMasters = (success)=>{
-		return fetch('/',{
+		return fetch('/app/masters',{
 			headers:{
 				Accept:'application/json',
 			}
-		}).then(checkStatus)
-		  .then(parseJSON)
+		}).then(this.checkStatus)
+		  .then(this.parseJSON)
 		  .then(success);
 	};
 }
@@ -38,20 +38,42 @@ class MasterDashboard extends React.Component{
 		this.loadMastersFromServer();
 		setInterval(this.loadMastersFromServer, 5000);
 	}
-	
+	//Usa a função getMasters() do Client pra pegar a lista de masters e atualiza o state.
 	loadMastersFromServer = () => {
-		
+		let cli = new Client();
+		cli.getMasters((masters)=>{
+			console.log(masters);
+			this.setState({masters:masters});
+		});
 	}
-	
+
 	//O método de renderização, exigido pelo react
 	render() {
+		const mastersList = this.state.masters.map((currentMaster)=>(
+		  <MasterPanel
+		    key={currentMaster.id}
+		  	master={currentMaster}
+		  />
+		));
+		return(
+		<div id='masterDashboard'>
+			{mastersList}
+		</div>
+		);
+	}
+}
+
+class MasterPanel extends React.Component
+{
+	render(){
 		return(
 			<div>
-				MasterDashboard
+				<div> Nome = {this.props.master.nome}</div>
 			</div>
 		);
 	}
 }
+
 
 ReactDOM.render(
   <MasterDashboard />,
